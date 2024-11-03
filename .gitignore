@@ -1,2 +1,5 @@
 #temp files
 .history
+
+# Version control
+.git
