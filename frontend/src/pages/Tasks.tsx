@@ -1,9 +1,13 @@
 import ListTask from "../components/ListTask";
+import ModalFormAdd from "../components/modal-form-add/ModalFormAdd";
 
-export default function Tasks(){
-    return(
+export default function Tasks() {
+    return (
         <>
-        <ListTask/>
+            <div className="flex justify-end mx-4">
+                <ModalFormAdd />
+            </div>
+            <ListTask />
         </>
     )
 }

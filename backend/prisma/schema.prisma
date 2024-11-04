@@ -30,7 +30,7 @@ model Task{
   priority Priority
   userId Int
   users User @relation(fields: [userId], references: [id])
-  status Boolean
+  status Boolean @default(false)
   start_time DateTime
   end_time DateTime
 }

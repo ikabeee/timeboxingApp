@@ -64,7 +64,7 @@ export default function FormSignInUp() {
           password: currentForm.data.password,
         });
 
-        console.log("Respuesta del servidor:", response.data); // Verificar respuesta
+        console.log("Respuesta del servidor:", response.data); 
         const token = response.data.token;
         localStorage.setItem("token", token);
         setMessage("Bienvenido a Timeboxing App");
@@ -83,7 +83,7 @@ export default function FormSignInUp() {
           password: currentForm.data.password,
         });
 
-        console.log("Respuesta del servidor después del registro:", loginResponse.data); // Verificar respuesta
+        console.log("Respuesta del servidor después del registro:", loginResponse.data); 
         const token = loginResponse.data.token;
         if (token) {
           localStorage.setItem("token", token);
@@ -172,28 +172,26 @@ export default function FormSignInUp() {
   );
 
   return (
-    <body className="flex flex-col min-h-screen bg-gray-900">
-      <main className="flex md:flex-row justify-center items-center flex-row px-4 md:px-10 space-y-8 md:space-y-0 md:space-x-8 py-5 w-full">
-        <Card className="absolute inset-0 bg-cover bg-center shadow-xl w-full max-w-xl flex flex-col h-full md:h-auto">
-          <CardBody className="overflow-hidden">
-            <Tabs
-              fullWidth
-              size="md"
-              aria-label="Tabs form"
-              selectedKey={selected}
-              onSelectionChange={(key) => setSelected(key as TabKey)}
-            >
-              <Tab key="login" title="Inicia Sesión">
-                {renderForm(loginForm, false)}
-              </Tab>
-              <Tab key="sign-up" title="Registrate">
-                {renderForm(registerForm, true)}
-              </Tab>
-            </Tabs>
-            {message && <p className="text-center text-red-500 mt-4">{message}</p>}
-          </CardBody>
-        </Card>
-      </main>
-    </body>
+    <div className="flex justify-center items-center h-screen bg-gray-900">
+      <Card className="w-full max-w-md bg-gray-800 text-white rounded-lg shadow-lg p-6 space-y-6">
+        <CardBody>
+          <Tabs
+            fullWidth
+            size="md"
+            aria-label="Tabs form"
+            selectedKey={selected}
+            onSelectionChange={(key) => setSelected(key as TabKey)}
+          >
+            <Tab key="login" title="Inicia Sesión">
+              {renderForm(loginForm, false)}
+            </Tab>
+            <Tab key="sign-up" title="Registrate">
+              {renderForm(registerForm, true)}
+            </Tab>
+          </Tabs>
+          {message && <p className="text-center text-red-500 mt-4">{message}</p>}
+        </CardBody>
+      </Card>
+    </div>
   );
 }

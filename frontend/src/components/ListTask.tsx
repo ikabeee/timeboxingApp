@@ -9,12 +9,11 @@ import {
   Chip,
   Tooltip,
   ChipProps,
+  Checkbox
 } from "@nextui-org/react";
-import { EditIcon } from "../assets/EditIcon.tsx";
-import { DeleteIcon } from "../assets/DeleteIcon.tsx";
-import { EyeIcon } from "../assets/EyeIcon.js";
-import useTasks from "../hooks/useTasks.ts"; 
-import Loader from "../common/Loader.tsx"; 
+import { DeleteIcon } from "../assets/DeleteIcon";
+import useTasks from "../hooks/useTasks";
+import Loader from "../common/Loader";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   active: "success",
@@ -23,7 +22,7 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
 };
 
 const columns = [
-  { uid: "title", name: "Título" },
+  { uid: "name", name: "Título" },
   { uid: "priority", name: "Prioridad" },
   { uid: "status", name: "Estado" },
   { uid: "startTime", name: "Fecha de Inicio" },
@@ -33,70 +32,74 @@ const columns = [
 
 type Task = {
   id: number;
-  title: string;
+  userId: number;
+  name: string;
   priority: string;
   status: string;
-  startTime: string;
-  endTime: string;
-  avatar: string;
-  email: string;
+  startTime?: string;
+  endTime?: string;
 };
 
 export default function ListTask() {
-  const { tasks, loading, error } = useTasks(); 
+  const { tasks, loading, error, updateTaskStatus, deleteTask } = useTasks();
+
+  const handleCheckboxChange = (taskId: number, currentStatus: string) => {
+    const newStatus = currentStatus === "active" ? "paused" : "active";
+    updateTaskStatus(taskId, newStatus);
+  };
+
+  const handleDeleteTask = (taskId: number) => {
+    deleteTask(taskId);
+  };
 
   const renderCell = React.useCallback((task: Task, columnKey: React.Key) => {
-    const cellValue = task[columnKey as keyof Task];
-
     switch (columnKey) {
-      case "title":
-        return cellValue;
+      case "name":
+        return task.name;
       case "priority":
         return (
-          <Chip color={statusColorMap[cellValue.toLowerCase()]} size="sm">
-            {cellValue}
+          <Chip color={statusColorMap[task.priority.toLowerCase()]} size="sm">
+            {task.priority}
           </Chip>
         );
       case "status":
         return (
-          <Chip className="capitalize" color={statusColorMap[task.status]} size="sm" variant="flat">
-            {cellValue}
-          </Chip>
+          <Checkbox
+            isSelected={task.status === "active"}
+            onChange={() => handleCheckboxChange(task.id, task.status)}
+            color="primary"
+            css={{
+              '& .nextui-checkbox': {
+                backgroundColor: task.status === "active" ? "blue" : "transparent",
+              },
+            }}
+          />
         );
       case "startTime":
+        return task.startTime;
       case "endTime":
-        return cellValue; // Muestra las fechas formateadas
+        return task.endTime;
       case "actions":
         return (
-          <div className="relative flex items-center gap-2">
-            <Tooltip content="Detalles">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <EyeIcon />
-              </span>
-            </Tooltip>
-            <Tooltip content="Editar tarea">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <EditIcon />
-              </span>
-            </Tooltip>
+          <div className="relative flex items-center gap-2 justify-center">
             <Tooltip color="danger" content="Eliminar tarea">
-              <span className="text-lg text-danger cursor-pointer active:opacity-50">
+              <span className="text-lg text-danger cursor-pointer active:opacity-50" onClick={() => handleDeleteTask(task.id)}>
                 <DeleteIcon />
               </span>
             </Tooltip>
           </div>
         );
       default:
-        return cellValue;
+        return null;
     }
-  }, []);
+  }, [tasks]);
 
   if (loading) {
     return <Loader />;
   }
 
   if (error) {
-    return <div>{error}</div>; 
+    return <div>{error}</div>;
   }
 
   return (
@@ -111,7 +114,9 @@ export default function ListTask() {
       <TableBody items={tasks}>
         {(item) => (
           <TableRow key={item.id}>
-            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+            {(columnKey) => (
+              <TableCell>{renderCell(item, columnKey)}</TableCell>
+            )}
           </TableRow>
         )}
       </TableBody>

@@ -18,8 +18,12 @@ export class TaskService {
   }
 
   async createTask(data: Task): Promise<Task> {
-    console.log(this.prisma.task.create({ data }));
-    return this.prisma.task.create({ data });
+    const taskData = {
+      ...data,
+      start_time: new Date(data.start_time),
+      end_time: new Date(data.end_time),
+    };
+    return this.prisma.task.create({ data: taskData });
   }
 
   async updateTask(id: number, data: Task): Promise<Task> {
