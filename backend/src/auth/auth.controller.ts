@@ -10,13 +10,15 @@ export class AuthController {
   constructor(private authService: AuthService) {}
   
   @Post('register')
-  registerUser(@Body() userRegister: RegisterAuthDto) {
+  async registerUser(@Body() userRegister: RegisterAuthDto) {
     return this.authService.register(userRegister);
   }
+  
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  loginUser(@Body() userLogin: LoginAuthDto) {
-    return this.authService.login(userLogin);
+  async loginUser(@Body() userLogin: LoginAuthDto) {
+    const { token } = await this.authService.login(userLogin);
+    return { token }; 
   }
 
   @UseGuards(AuthGuard)

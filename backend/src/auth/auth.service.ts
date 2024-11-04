@@ -26,6 +26,7 @@ export class AuthService {
     const findUser = await this.prisma.user.findUnique({
       where: { email: email },
     });
+    
     if (!findUser) {
       throw new HttpException('USER_NOT_FOUND', 404); //NOT FOUND
     }

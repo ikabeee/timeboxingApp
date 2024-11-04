@@ -10,16 +10,19 @@ export class RegisterAuthDto {
   @IsString()
   @IsNotEmpty()
   name: string;
+
   @IsString()
   @IsNotEmpty()
   lastName: string;
-  @IsNotEmpty()
+
   @IsString()
-  @MaxLength(30)
+  @IsNotEmpty()
   userName: string;
+
   @IsNotEmpty()
   @IsEmail()
   email: string;
+
   @IsNotEmpty()
   @IsString()
   @MaxLength(50)
