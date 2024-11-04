@@ -2,7 +2,7 @@ import { Footer, FooterBrand, FooterCopyright, FooterDivider, FooterLink, Footer
 
 export function FooterTime() {
   return (
-    <Footer container>
+    <Footer className="flex flex-col min-h-0 mt-0 items-center justify-between w-full fixed bottom-0 left-0 right-0 bg-white rounded-none py-4 px-4"> {/* Añadido rounded-none */}
       <div className="w-full text-center">
         <div className="w-full justify-between sm:flex sm:items-center sm:justify-between">
           <FooterBrand

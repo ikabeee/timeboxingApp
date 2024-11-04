@@ -63,7 +63,7 @@ export default function FormSignInUp() {
           email: currentForm.data.email,
           password: currentForm.data.password,
         });
-        
+
         console.log("Respuesta del servidor:", response.data); // Verificar respuesta
         const token = response.data.token;
         localStorage.setItem("token", token);
@@ -163,35 +163,37 @@ export default function FormSignInUp() {
           {isRegister ? "Inicia sesión" : "Crea tu cuenta"}
         </Link>
       </p>
-      <div className="flex gap-2 justify-end">
+      <body className="flex gap-2 justify-end">
         <Button fullWidth color="primary" type="submit">
           {isRegister ? "Registrate" : "Inicia sesión"}
         </Button>
-      </div>
+      </body>
     </form>
   );
 
   return (
-    <div className="flex flex-col w-full">
-      <Card className="max-w-full w-[340px] h-[400px]">
-        <CardBody className="overflow-hidden">
-          <Tabs
-            fullWidth
-            size="md"
-            aria-label="Tabs form"
-            selectedKey={selected}
-            onSelectionChange={(key) => setSelected(key as TabKey)}
-          >
-            <Tab key="login" title="Inicia Sesión">
-              {renderForm(loginForm, false)}
-            </Tab>
-            <Tab key="sign-up" title="Registrate">
-              {renderForm(registerForm, true)}
-            </Tab>
-          </Tabs>
-          {message && <p className="text-center text-red-500 mt-4">{message}</p>}
-        </CardBody>
-      </Card>
-    </div>
+    <body className="flex flex-col min-h-screen bg-gray-900">
+      <main className="flex md:flex-row justify-center items-center flex-row px-4 md:px-10 space-y-8 md:space-y-0 md:space-x-8 py-5 w-full">
+        <Card className="absolute inset-0 bg-cover bg-center shadow-xl w-full max-w-xl flex flex-col h-full md:h-auto">
+          <CardBody className="overflow-hidden">
+            <Tabs
+              fullWidth
+              size="md"
+              aria-label="Tabs form"
+              selectedKey={selected}
+              onSelectionChange={(key) => setSelected(key as TabKey)}
+            >
+              <Tab key="login" title="Inicia Sesión">
+                {renderForm(loginForm, false)}
+              </Tab>
+              <Tab key="sign-up" title="Registrate">
+                {renderForm(registerForm, true)}
+              </Tab>
+            </Tabs>
+            {message && <p className="text-center text-red-500 mt-4">{message}</p>}
+          </CardBody>
+        </Card>
+      </main>
+    </body>
   );
 }

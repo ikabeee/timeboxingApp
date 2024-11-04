@@ -14,12 +14,12 @@ const useTasks = () => {
               id: task.id,
               userId: task.userId,
               name: task.title,
-              priority: task.priority, // Agrega la prioridad
+              priority: task.priority, 
               status: task.status ? 'active' : 'paused',
-              startTime: new Date(task.start_time).toLocaleString(), // Formatea la fecha de inicio
-              endTime: new Date(task.end_time).toLocaleString(), // Formatea la fecha de finalización
+              startTime: new Date(task.start_time).toLocaleString(), 
+              endTime: new Date(task.end_time).toLocaleString(), 
           }));
-          setTasks(formattedTasks); // Usa formattedTasks
+          setTasks(formattedTasks); 
         } catch (error) {
           if (axios.isAxiosError(error)) {
             setError(error.message);
