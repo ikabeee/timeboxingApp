@@ -1,17 +1,17 @@
-import { Route, Routes } from 'react-router-dom'
-import { FooterTime } from './layouts/FooterTime'
-import Tasks from './pages/Tasks'
-import Login from './pages/Login'
+import { Route, Router, Routes } from 'react-router-dom'
 import './index.css'
+import SignIn from './pages/SignIn'
+import Tasks from './pages/Tasks'
+
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<SignIn />} />
         <Route path="/tasks" element={<Tasks />} />
       </Routes>
-      <FooterTime />
+
     </>
   )
 }
